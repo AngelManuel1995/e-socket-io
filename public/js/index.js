@@ -7,11 +7,11 @@ socket.on('connect', function() {
     //     text:'Hey this is from client'
     // })
 
-    socket.emit('createMessage',{
-        to:'Angel',
-        text:'Nope',
-        createdAt:123
-    })
+    // socket.emit('createMessage',{
+    //     to:'Angel',
+    //     text:'Nope',
+    //     createdAt:123
+    // })
 
     socket.on('newMessage', function(message){
         console.log(message)

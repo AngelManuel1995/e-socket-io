@@ -11,12 +11,24 @@ let io = socketIO(server)
 
 app.use(express.static(publicPath))
 
-io.on('connection', (socket) => {
+io.on('connection', (socket) => { //Evento que se dispara cuando hay una nueva conexion
     console.log('new user connected')
 
-    socket.on('createMessage',(message) => {
+    socket.emit('newMessage', {
+        from:'Admin',
+        text:'Wellcome to chat socket-io',
+        createdAt: new Date().getTime()
+    })
+
+    socket.broadcast.emit('newMessage', {
+        from:'Admin',
+        text:'New user joined',
+        createdAt: new Date().getTime()
+    })
+
+    socket.on('createMessage',(message) => { //Evento customizadado que se dispara el emit con el mismo nombre del evento
         console.log('createMessage')
-        io.emit('newMessage', {
+        io.emit('newMessage', { //io.emit Emite un evento a todos los sockets activos en el momento
             from:message.from,
             text:message.text,
             createdAt: new Date().getTime()
@@ -43,7 +55,7 @@ io.on('connection', (socket) => {
     //     console.log(message)
     // })
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', () => { //Evento que se dispara cuando un una persona se desconecta
         console.log('User was disconnected')
     })
 })
