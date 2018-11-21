@@ -1,6 +1,6 @@
 let socket = io();
 
-socket.on('connect', function() {
+socket.on('connect', function() { //Este evento corresponde o escucha a connection 
     socket.on('newMessage', function(message){
         console.log(message)
     })
@@ -19,5 +19,7 @@ document.querySelector('#message-form').addEventListener('submit', function(ev){
     socket.emit('createMessage', {
         from: 'User',
         text: ev.target.elements[0].value
+    }, function(){
+        
     })
 })
