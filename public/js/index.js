@@ -10,8 +10,10 @@ socket.on('disconnect', function() {
     console.log('Disconnected from server')
 })
 
-socket.on('newEmail', function(mail){
-    console.log('Nuevo Email emitido', mail)
+socket.on('newMessage', function(message) {
+    let li = document.createElement('LI')
+    li.textContent = `${message.from}: ${message.text}`
+    document.getElementById('messages').appendChild(li)
 })
 
 document.querySelector('#message-form').addEventListener('submit', function(ev){
@@ -19,7 +21,7 @@ document.querySelector('#message-form').addEventListener('submit', function(ev){
     socket.emit('createMessage', {
         from: 'User',
         text: ev.target.elements[0].value
-    }, function(){
-        
+    }, function(message){
+       
     })
 })

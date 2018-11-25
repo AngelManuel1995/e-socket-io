@@ -20,6 +20,11 @@ io.on('connection', (socket) => { //Evento que se dispara cuando hay una nueva c
 
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'))
    
+    socket.on('createMessage', (message, callback) => {
+        console.log('createMessage',message)
+        io.emit('newMessage', generateMessage(message.from, message.text))
+        callback('This is from the server')
+    })
 
     // socket.on('createMessage',(message) => { //Evento customizadado que se dispara el emit con el mismo nombre del evento
     //     io.emit('newMessage', generateMessage(message.from, message.text))  //io.emit Emite un evento a todos los sockets activos en el momento
